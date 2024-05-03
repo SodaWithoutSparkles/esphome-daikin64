@@ -48,6 +48,7 @@ sensor:
     internal: true
     
 climate:
+  # just remove the daikinac->set_senso line if you dont have another temperature sensor
   - platform: custom
     lambda: |-
       auto daikinac = new DaikinAC();
