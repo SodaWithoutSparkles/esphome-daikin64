@@ -1,0 +1,64 @@
+esphome:
+  name: esp8266
+  friendly_name: esp8266
+  includes: 
+    - include/irdaikin.h
+  libraries:
+    # - IRremoteESP8266
+    - crankyoldgit/IRremoteESP8266@^2.8.6
+
+esp8266:
+  board: esp01_1m
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "<REDACTED>"
+    
+ota:
+  password: "<REDACTED>"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+time:
+  - platform: homeassistant
+    timezone: Europe/London
+    id: esptime
+    
+switch:
+    # change this sensor to one that can actually sense the AC status
+    # For example, a reed switch at the exhaust cover, or a current sensor with a analogue threshold
+    # if you dont have one, keep this template sensor
+  - platform: template
+    name: "AC status"
+    id: ac_status
+    restore_mode: RESTORE_DEFAULT_OFF 
+    optimistic: True
+    
+sensor:
+    # Actual temperature
+  - platform: homeassistant
+    id: living_room_temperature
+    entity_id: sensor.living_room_temperature
+    internal: true
+    
+climate:
+  # just remove the daikinac->set_senso line if you dont have another temperature sensor
+  - platform: custom
+    lambda: |-
+      auto daikinac = new DaikinAC();
+      daikinac->set_sensor(id(living_room_temperature));
+      App.register_component(daikinac);
+      return {daikinac};
+    climates:
+      - name: "AC"
+        on_state: 
+          - lambda: |-
+              # Delete this lambda and the whole on_state trigger
+              # IF you dont have the template sensor
+              id(ac_status).publish_state(x.mode != CLIMATE_MODE_OFF);
