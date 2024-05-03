@@ -4,6 +4,10 @@ Integrating `daikin64` protocol with esphome to control daikin air conditioners.
 This is how I integrated the `daikin64` IR protocol to esphome, since the official repo doesn't support it.
 It has been tested on a esp8266. Other daikin protocols could possibily be implemented using a similar approach, such as `DAIKIN128`, `DAIKIN176`, `DAIKIN152`, etc.
 
+## Help!
+
+I was not able to compile this exact code on esp32 with esp-idf framework. Can anyone try if this can be compiled on a esp32 with arduino framework?
+
 ## How to use
 1. Find where esphome stores the yaml files for each of the other nodes
 2. Create a directory named `include`
