@@ -1,5 +1,5 @@
 # esphome-daikin64
-Integrating `daikin64` protocol with esphome 4to control daikin air conditioners.
+Integrating `daikin64` protocol with esphome to control daikin air conditioners.
 
 This is how I integrated the `daikin64` IR protocol to esphome, since the official repo doesn't support it.
 It has been tested on a esp8266. Other daikin protocols could possibily be implemented using a similar approach, such as `DAIKIN128`, `DAIKIN176`, `DAIKIN152`, etc.
