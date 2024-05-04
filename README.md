@@ -6,7 +6,8 @@ It has been tested on a esp8266. Other daikin protocols could possibily be imple
 
 ## Help!
 
-I was not able to compile this exact code on esp32 with esp-idf framework. Can anyone try if this can be compiled on a esp32 with arduino framework?
+I was not able to compile this exact code on esp32 with esp-idf framework. Can anyone try if this can be compiled on a esp32 with arduino framework? 
+Related: https://github.com/esphome/issues/issues/5764
 
 ## How to use
 1. Find where esphome stores the yaml files for each of the other nodes
