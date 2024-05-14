@@ -151,7 +151,20 @@ class DaikinAC : public Component, public Climate {
     ac.setClock(id(esptime).now().hour * 60 + id(esptime).now().minute);
 #endif
 
-    ac.send();
+    // a hack to transfer on/off state
+    // since we cant set humidity via front-end, and
+    // if it has this magic humidity value (0.78125%) it must be sent by us
+    // Yes this is the actual value in float from IEEE754
+
+    if (call.get_target_humidity().has_value()) {
+      float humid = *call.get_target_humidity();
+      if (humid == 0.0078125) {
+        // just publish the state, dont send
+        ESP_LOGD("DEBUG", "Updated Daikin A/C status without sending");
+      } else { ac.send();}
+    } else { ac.send();}
+
+//    ac.send();
 
     this->publish_state();
 
